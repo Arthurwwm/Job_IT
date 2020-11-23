@@ -29,9 +29,15 @@ class Categories
      */
     private $jobs;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Affilies::class, mappedBy="category")
+     */
+    private $affilies;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
+        $this->affilies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,6 +82,33 @@ class Categories
             if ($job->getCategory() === $this) {
                 $job->setCategory(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Affilies[]
+     */
+    public function getAffilies(): Collection
+    {
+        return $this->affilies;
+    }
+
+    public function addAffily(Affilies $affily): self
+    {
+        if (!$this->affilies->contains($affily)) {
+            $this->affilies[] = $affily;
+            $affily->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAffily(Affilies $affily): self
+    {
+        if ($this->affilies->removeElement($affily)) {
+            $affily->removeCategory($this);
         }
 
         return $this;
