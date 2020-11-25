@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello JobsController!{% endblock %}
+
+{% block body %}
+<div class="annonce row">  
+    <div class="col-12">
+        <h2>{{ job.entreprise }}</h2>
+        <p>{{ job.contrat }} - {{ job.lieu }} - {{ job.pays }}</p>
+        <h2>{{ job.intitule }}</h2>
+        <img src="{{ job.logo }}" alt="{{ job.entreprise }}">
+        <p>{{ job.description }}</p>
+        <p>{{ job.postuler }}</p>
+    </div>
+</div>
+{% endblock %}

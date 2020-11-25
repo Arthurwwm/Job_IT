@@ -21,16 +21,29 @@ class JobsController extends AbstractController
     public function jobsCateg(JobsRepository $jr, $categorie_id): Response
     {
 
-        $jobs = $jr->findBy(['category' => $categorie_id],);
+        $jobs = $jr->findBy(['category' => $categorie_id, 'active' => 1],);
         if (!$jobs) {             
             throw $this->createNotFoundException("La catégorie demandée n'existe pas");         
         }
         $nomCateg = $jobs[0]->getCategory()->getNom();
-        
-        dd($nomCateg);
         return $this->render('jobs/index.html.twig', [
             'jobs' => $jobs,
             'nomCateg' => $nomCateg,
+        ]);
+    }
+
+    /**
+     * @Route("/{categorie_id}/{job_id}", name="job")
+     */
+    public function job(JobsRepository $jr, $job_id): Response
+    {
+
+        $job = $jr->findBy(['id' =>$job_id,'active' =>1]);
+        if (!$job) {             
+            throw $this->createNotFoundException("L'annonce recherchée n'existe pas");         
+        }
+        return $this->render('jobs/job.html.twig', [
+            'job' => $job,
         ]);
     }
 }
