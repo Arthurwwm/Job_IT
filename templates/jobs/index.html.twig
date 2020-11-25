@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Hello JobsController!{% endblock %}
 
 {% block body %}
+<h2>{{ nomCateg }}</h2>
 <div class="row annonces">  
     {% for job in jobs %}
         <div class="card mb-3">
@@ -15,7 +16,7 @@
                     <div class="card-header bg-transparent">{{ job.entreprise }}</div>
                     <h2 class="card-title">{{ job.intitule }}</h2>
                     <div class="card-footer bg-transparent"> {{ job.contrat }}, {{ job.lieu }}, {{job.pays}}</div>
-                            <a href="{{ path("jobs",{job.category}) }}">A retrouver dans {{ job.category.nom }}</a>
+                            <a href="">Voir la fiche</a>
                 </div>
                 </div>
             </div>
