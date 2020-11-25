@@ -13,12 +13,12 @@ class JobsController extends AbstractController
     /**
      * @const JOBS_PAGE nombre de jobs maximal à afficher
      */
-    const JOBS_PAGE = 5;
+    const JOBS_PAGE = 20;
 
     /**
      * @Route("/{categorie_id}", name="jobs")
      */
-    public function jobsCateg(JobsRepository $jr, $categorie_id): Response
+    public function jobsCateg(JobsRepository $jr,int $categorie_id): Response
     {
 
         $jobs = $jr->findBy(['category' => $categorie_id, 'active' => 1],);
@@ -33,7 +33,7 @@ class JobsController extends AbstractController
     }
 
     /**
-     * @Route("/{categorie_id}/{job_id}", name="job")
+     * @Route("/{cat_id}/{job_id}", name="job")
      */
     public function job(JobsRepository $jr, $job_id): Response
     {
