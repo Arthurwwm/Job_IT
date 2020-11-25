@@ -10,12 +10,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategoriesController extends AbstractController
 {
     /**
-     * @Route("/categories", name="categories")
+     * @Route("/{categorie}", name="categories")
      */
-    public function categs(EntityManagerInterface $em): Response
+    public function categs(EntityManagerInterface $em, $categorie): Response
     {
+        $category = $em-> getRepository(Categories::class) -> findOneBy(['nom' => $categorie],);
+        
+        if (!$category) {
+            throw $this -> createNotFoundException("Cette catégorie n'existe pas");
+        }
         return $this->render('categories/index.html.twig', [
-            'controller_name' => 'CategoriesController',
+            'category' => $category,
         ]);
     }
 }
