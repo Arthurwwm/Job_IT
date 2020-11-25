@@ -93,6 +93,11 @@ class Jobs
      */
     private $postuler;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $intitule;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -274,6 +279,18 @@ class Jobs
     public function setPostuler(string $postuler): self
     {
         $this->postuler = $postuler;
+
+        return $this;
+    }
+
+    public function getIntitule(): ?string
+    {
+        return $this->intitule;
+    }
+
+    public function setIntitule(string $intitule): self
+    {
+        $this->intitule = $intitule;
 
         return $this;
     }
