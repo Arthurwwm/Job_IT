@@ -17,10 +17,10 @@ class NewJobController extends AbstractController
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $job = new Jobs();
-        $job->setActive();
-        $job->setCreated();
+        $job->setActive(1);
+        $job->setCreated(new \DateTime() );
         $job->setUpdated();
-        $job->setCreated();
+        $job->setExpire();
         $job->setToken();
 
         $form = $this->createForm(NewJobType::class, $job);
