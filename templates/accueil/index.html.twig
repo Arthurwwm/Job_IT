@@ -5,7 +5,7 @@
 {% block body %}
 <div class="row annonces">  
     {% for job in jobs %}
-        <div class="card mb-3">
+        <div class="card col-12 mb-3">
             <div class="row no-gutters">
                 <div class="col-md-4">
                     <img src="images/logo/{{ job.logo }}" class="card-img" alt="{{ job.entreprise }}">
@@ -15,7 +15,7 @@
                     <div class="card-header bg-transparent">{{ job.entreprise }}</div>
                     <h2 class="card-title">{{ job.intitule }}</h2>
                     <div class="card-footer bg-transparent"> {{ job.contrat }}, {{ job.lieu }}, {{job.pays}}</div>
-                            <a href="">A retrouver dans {{ job.category.nom }}</a>
+                            <a href="{{ path( 'jobs', {'categorie_id':job.category.id} ) }}">A retrouver dans {{ job.category.nom }}</a>
                 </div>
                 </div>
             </div>
