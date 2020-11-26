@@ -49,6 +49,11 @@ class Affilies
      */
     private $category;
 
+    public function __toString(): string
+    {
+        return $this->email;
+    }
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
