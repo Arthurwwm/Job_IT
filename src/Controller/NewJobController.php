@@ -35,12 +35,12 @@ class NewJobController extends AbstractController
             }
             $job = $form->getData();
             $job->setActive(1);
-            $job->setCreated(new \DateTime() );
-            $job->setUpdated(new \DateTime() );
-            $job->setExpire(new \DateTime() );
+            $job->setCreated(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')));
+            $job->setExpire(date_add(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')), date_interval_create_from_date_string('30 days')));
+            $job->setUpdated(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')));
             $job->setToken();
             // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
+            // for example, if Jobs is a Doctrine entity, save it!
             $em->persist($job);
             $em->flush();
 
