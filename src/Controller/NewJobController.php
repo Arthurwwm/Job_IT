@@ -12,16 +12,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class NewJobController extends AbstractController
 {
     /**
-     * @Route("/new/job", name="new_job")
+     * @Route("/new/job", name="newjob")
      */
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $job = new Jobs();
-        $job->setActive(1);
-        $job->setCreated(new \DateTime() );
-        $job->setUpdated();
-        $job->setExpire();
-        $job->setToken();
+        // $job->setActive(1);
+        // $job->setCreated(new \DateTime() );
+        // $job->setUpdated(new \DateTime() );
+        // $job->setExpire();
+        // $job->setToken();
 
         $form = $this->createForm(NewJobType::class, $job);
 
