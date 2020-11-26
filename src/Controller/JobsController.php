@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Repository\JobsRepository;
-use App\Repository\CategoriesRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,13 +26,15 @@ class JobsController extends AbstractController
         $jobs = $paginator->paginate( 
             $data, 
             $request->query->getInt('page',1),
-            5
+            2
         );
 
         if (!$jobs) {             
             throw $this->createNotFoundException("La catégorie demandée n'existe pas");         
         }
+
         $nomCateg = $jobs[0]->getCategory()->getNom();
+
         return $this->render('jobs/index.html.twig', [
             'jobs' => $jobs,
             'nomCateg' => $nomCateg,
