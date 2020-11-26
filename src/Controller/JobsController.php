@@ -16,7 +16,7 @@ class JobsController extends AbstractController
     const JOBS_PAGE = 20;
 
     /**
-     * @Route("/{categorie_id}", name="jobs")
+     * @Route("/cat{categorie_id}", name="jobs")
      */
     public function jobsCateg(JobsRepository $jr,int $categorie_id): Response
     {

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Jobs;
+use App\Form\NewJobType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,16 +13,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class NewJobController extends AbstractController
 {
     /**
-     * @Route("/new/job", name="newjob")
+     * @Route("/newjob", name="newjob")
      */
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $job = new Jobs();
-        // $job->setActive(1);
-        // $job->setCreated(new \DateTime() );
-        // $job->setUpdated(new \DateTime() );
-        // $job->setExpire();
-        // $job->setToken();
 
         $form = $this->createForm(NewJobType::class, $job);
 
@@ -30,7 +26,11 @@ class NewJobController extends AbstractController
             // $form->getData() holds the submitted values
             // but, the original `$task` variable has also been updated
             $job = $form->getData();
-
+            $job->setActive(1);
+            $job->setCreated(new \DateTime() );
+            $job->setUpdated(new \DateTime() );
+            $job->setExpire(new \DateTime() );
+            $job->setToken();
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
             $em->persist($job);

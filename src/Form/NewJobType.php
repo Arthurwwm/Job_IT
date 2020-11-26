@@ -7,6 +7,7 @@ use App\Entity\Categories;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,7 +36,9 @@ class NewJobType extends AbstractType
             ])
             ->add('category', EntityType::class,[
                 'class' => Categories::class,
-                'choice_label' => ''
+                'choice_label' => function ($category) {
+                    return $category->getNom();
+                }
 
             ])
             ->add('entreprise', TextType::class,[
@@ -45,12 +48,25 @@ class NewJobType extends AbstractType
                     'placeholder' => "Nom de l'entreprise",
                 ]            
             ])
-            ->add('logo', FileType::class,[
+
+            ->add('logo', FileType::class, [
                 'label' => 'Ajouter votre image',
                 'attr' => [
                     'class' => 'form-control',
-                ]
-            ])
+                    'placeholder' => '.gif .jpg ou .png'
+                ],
+                'constraints' => [
+                  new File([ 
+                    'mimeTypes' => [ //seulement 3 types de fichiers d'images possibles
+                      'image/gif', 
+                      'image/jpeg', 
+                      'image/png', 
+
+                    ],
+                    'mimeTypesMessage' => "Ce document n'est pas valide",
+                  ])
+                ],
+              ])
             ->add('url', TextType::class,[
                 'label' => 'Votre site',
                 'attr' => [
