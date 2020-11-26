@@ -16,7 +16,7 @@
                     <div class="card-header bg-transparent">{{ job.entreprise }}</div>
                     <h2 class="card-title">{{ job.intitule }}</h2>
                     <div class="card-footer bg-transparent"> {{ job.contrat }}, {{ job.lieu }}, {{job.pays}}</div>
-                            <a href="">Voir la fiche</a>
+                            <a href="{{ path( 'job', {'cat_nom':nomCateg, 'job_id':job.id} ) }}">Voir la fiche</a>
                 </div>
                 </div>
             </div>
