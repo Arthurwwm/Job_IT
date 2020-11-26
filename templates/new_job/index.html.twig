@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello NewJobController!{% endblock %}
+{% block title %}Votre Offre{% endblock %}
 
 {% block body %}
     <h2>Votre Offre</h2>
@@ -16,6 +16,6 @@
         {{ form_row(form.description) }}
         {{ form_row(form.email) }}
         {{ form_row(form.postuler) }}
-        {{ form_row(form.submit) }}
+        {{ form_row(form.submit, { 'attr' : { 'class' : 'btn btn-primary'}}) }}
     {{ form_end(form) }}
 {% endblock %}

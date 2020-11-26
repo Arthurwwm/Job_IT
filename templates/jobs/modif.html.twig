@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre Offre{% endblock %}
+
+{% block body %}
+    <h2>Votre Offre</h2>
+    {{ form_start(form) }}
+        {{ form_row(form.intitule, { 'attr' : { 'value' : job.intitule }}) }}
+        {{ form_row(form.contrat, { 'attr' : { 'value' : job.contrat }}) }}
+        {{ form_row(form.category, { 'attr' : { 'value' : job.category }}) }}
+        {{ form_row(form.entreprise, { 'attr' : { 'value' : job.entreprise }}) }}
+        {{ form_row(form.logo, { 'attr' : { 'value' : job.logo }}) }}
+        {{ form_row(form.url, { 'attr' : { 'value' : job.url }}) }}
+        {{ form_row(form.lieu, { 'attr' : { 'value' : job.lieu }}) }}
+        {{ form_row(form.pays, { 'attr' : { 'value' : job.pays }}) }}
+        {{ form_row(form.description, { 'attr' : { 'value' : job.description }}) }}
+        {{ form_row(form.postuler, { 'attr' : { 'value' : job.postuler }}) }}
+        {{ form_row(form.submit, { 'attr' : { 'class' : 'btn btn-primary'}}) }}
+    {{ form_end(form) }}
+{% endblock %}
