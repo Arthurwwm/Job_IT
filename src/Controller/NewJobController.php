@@ -25,6 +25,7 @@ class NewJobController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
             // but, the original `$task` variable has also been updated
+            $file = $form['logo']->getData
             $job = $form->getData();
             $job->setActive(1);
             $job->setCreated(new \DateTime() );
