@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Jobs;
 use App\Form\NewJobType;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ class NewJobController extends AbstractController
     /**
      * @Route("/newjob", name="newjob")
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, FileUploader $fileUploader): Response
     {
         $job = new Jobs();
 
@@ -23,9 +24,15 @@ class NewJobController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
-            $file = $form['logo']->getData
+            // gestion d'upload de l'image
+            $file = $form['logo']->getData();
+            if ($file) {
+                $file_name = $fileUploader->upload($file);
+                if ($file_name !== null) {
+                    $directory = $fileUploader->getTargetDirectory();
+                    $full_path = $directory.'/'.$file_name;
+                }
+            }
             $job = $form->getData();
             $job->setActive(1);
             $job->setCreated(new \DateTime() );

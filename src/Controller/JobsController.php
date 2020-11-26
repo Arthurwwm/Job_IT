@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
-use App\Repository\CategoriesRepository;
 use App\Repository\JobsRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\CategoriesRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class JobsController extends AbstractController
 {
@@ -18,10 +20,16 @@ class JobsController extends AbstractController
     /**
      * @Route("/cat{categorie_id}", name="jobs")
      */
-    public function jobsCateg(JobsRepository $jr,int $categorie_id): Response
+    public function jobsCateg(JobsRepository $jr, int $categorie_id, PaginatorInterface $paginator, Request $request): Response
     {
 
-        $jobs = $jr->findBy(['category' => $categorie_id, 'active' => 1],);
+        $data = $jr->findBy(['category' => $categorie_id, 'active' => 1],);
+        $jobs = $paginator->paginate( 
+            $data, 
+            $request->query->getInt('page',1),
+            5
+        );
+
         if (!$jobs) {             
             throw $this->createNotFoundException("La catégorie demandée n'existe pas");         
         }

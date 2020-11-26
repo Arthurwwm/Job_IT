@@ -35,6 +35,7 @@ class NewJobType extends AbstractType
                 ]
             ])
             ->add('category', EntityType::class,[
+                'label' => 'Catégorie',
                 'class' => Categories::class,
                 'choice_label' => function ($category) {
                     return $category->getNom();
