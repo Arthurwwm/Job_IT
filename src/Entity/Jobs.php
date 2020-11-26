@@ -98,6 +98,11 @@ class Jobs
      */
     private $intitule;
 
+    public function __toString(): string
+    {
+        return $this->intitule;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

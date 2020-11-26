@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Jobs;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +14,7 @@ class NewJobController extends AbstractController
     /**
      * @Route("/new/job", name="new_job")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $job = new Jobs();
         $job->setActive();
@@ -32,15 +33,14 @@ class NewJobController extends AbstractController
 
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($job);
-            $entityManager->flush();
+            $em->persist($job);
+            $em->flush();
 
             return $this->redirectToRoute('accueil');
         }
 
         return $this->render('new_job/index.html.twig', [
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 }
