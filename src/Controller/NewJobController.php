@@ -117,7 +117,7 @@ class NewJobController extends AbstractController
 
         $diff = date_diff_array(new \DateTime(), $job->getExpire());
 
-        if($diff['week'] < 1 && $diff['day'] < 5 ) {//ou si il reste moins de 5 jours avnt la fin de validité de l'annonce
+        if( $diff['week'] < 1 && $diff['day'] < 5 ) {//ou si il reste moins de 5 jours avnt la fin de validité de l'annonce
             // On renvoie une erreur 404
             throw $this->createNotFoundException("Cette annonce n'est plus modifiable");
         }
