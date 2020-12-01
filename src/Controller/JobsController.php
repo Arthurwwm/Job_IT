@@ -26,7 +26,7 @@ class JobsController extends AbstractController
         $jobs = $paginator->paginate( 
             $data, 
             $request->query->getInt('page',1),
-            2
+            self::JOBS_PAGE
         );
 
         if (!$jobs) {             
