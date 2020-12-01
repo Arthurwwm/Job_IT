@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Jobs;
+use App\Form\ModifJobType;
 use App\Form\NewJobType;
 use App\Service\FileUploader;
 use App\Repository\JobsRepository;
@@ -117,27 +118,27 @@ class NewJobController extends AbstractController
 
         $diff = date_diff_array(new \DateTime(), $job->getExpire());
 
-        if( $diff['week'] < 1 && $diff['day'] < 5 ) {//ou si il reste moins de 5 jours avnt la fin de validité de l'annonce
+        if( $diff['week'] < 1 && $diff['day'] < 5 ) {//ou si il reste moins de 5 jours avant la fin de validité de l'annonce
             // On renvoie une erreur 404
             throw $this->createNotFoundException("Cette annonce n'est plus modifiable");
         }
 
 
         //permettre de modifier l'annonce
-        $formulModif = $this->createForm(NewJobType::class, $job);
+        $formulModif = $this->createForm(ModifJobType::class, $job);
 
         $formulModif->handleRequest($request);
         if ($formulModif->isSubmitted() && $formulModif->isValid()) {
-            // gestion d'upload de l'image
-            $file = $formulModif['logo']->getData();
-            if ($file) {
-                $file_name = $fileUploader->upload($file);
-                if ($file_name === null) {
-                    throw $this->createNotFoundException("un souci avec votre fichier"); 
-                }
-            }
-            $job = $formulModif->getData();
-            $job->setLogo($file_name);
+            // // gestion d'upload de l'image
+            // $file = $formulModif['logo']->getData();
+            // if ($file) {
+            //     $file_name = $fileUploader->upload($file);
+            //     if ($file_name === null) {
+            //         throw $this->createNotFoundException("un souci avec votre fichier"); 
+            //     }
+            // }
+            // $job = $formulModif->getData();
+            // $job->setLogo($file_name);
             $job->setActive(1);
             $job->setExpire(date_add(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')), date_interval_create_from_date_string('30 days')));
             $job->setUpdated(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')));
