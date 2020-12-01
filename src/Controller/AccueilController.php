@@ -21,9 +21,18 @@ class AccueilController extends AbstractController {
     public function index(EntityManagerInterface $em): Response
     {
         $jobs = $em-> getRepository(Jobs::class) -> findBy(['active' => 1],['updated'=>'DESC'],self::JOBS_PAGE,0);
+        dd($jobs);
+        $categs = array();
 
+        foreach ($jobs as $job) {
+            if (!in_array($job->getCategory()->getNom(),$categs)) {
+                $categs[] = (object) $job->getCategory()->getNom(); 
+            }
+        }
+        dd($categs);
         return $this->render('accueil/index.html.twig', [
             'jobs' => $jobs,
+            'categories' => $categs,
         ]);
     }
 
